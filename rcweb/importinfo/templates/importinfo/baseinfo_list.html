@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+{% load importinfo_extras %}
+{% block content %}
+    <h2>您导入的客户信息</h2>
+    <table border="1" width="100%" align="center">
+        <tr bgcolor="green">
+            {#<td>{{ object_list|verbose_name:'customer_id' }}</td>#}
+            <td>{{ object_list|verbose_name:'customer_name' }}</td>
+            <td>{{ object_list|verbose_name:'idno' }}</td>
+            <td>{{ object_list|verbose_name:'phone' }}</td>
+            <td>{{ object_list|verbose_name:'annual_income' }}</td>
+            <td>{{ object_list|verbose_name:'apply_quota' }}</td>
+            <td>{{ object_list|verbose_name:'loan_purpose' }}</td>
+            <td>{{ object_list|verbose_name:'creditcard_quota' }}</td>
+            <td>{{ object_list|verbose_name:'education' }}</td>
+            <td>{{ object_list|verbose_name:'property' }}</td>
+            <td>{{ object_list|verbose_name:'property_location' }}</td>
+            <td>{{ object_list|verbose_name:'residential_address' }}</td>
+            <td>{{ object_list|verbose_name:'living_conditions' }}</td>
+            <td>{{ object_list|verbose_name:'company_name' }}</td>
+            <td>{{ object_list|verbose_name:'department' }}</td>
+            <td>{{ object_list|verbose_name:'recruit_time' }}</td>
+            <td>{{ object_list|verbose_name:'marriage' }}</td>
+            <td>{{ object_list|verbose_name:'vehicle' }}</td>
+            <td>{{ object_list|verbose_name:'residence_address' }}</td>
+            <td>{{ object_list|verbose_name:'residence_year' }}</td>
+            <td>{{ object_list|verbose_name:'company_address' }}</td>
+            <td>{{ object_list|verbose_name:'nature' }}</td>
+            <td>{{ object_list|verbose_name:'position' }}</td>
+            <td>操作</td>
+            <td>{{ object_list|verbose_name:'scoring_status'}}</td>
+        </tr>
+
+        {% for BaseInfo in object_list %}
+        <tr>
+            {#<td>{{ BaseInfo.customer_id }}</td>#}
+            <td>{% if BaseInfo.customer_name != null %}{{BaseInfo.customer_name}}{% else %}客户{{BaseInfo.customer_id}}{% endif %}</td>
+            <td>{{ BaseInfo.idno }}</td>
+            <td>{{ BaseInfo.phone }}</td>
+            <td>{{ BaseInfo.annual_income }}</td>
+            <td>{{ BaseInfo.apply_quota }}</td>
+            <td>{{ BaseInfo.loan_purpose| default_if_none:"" }}</td>
+            <td>{{ BaseInfo.creditcard_quota }}</td>
+            <td>{{ BaseInfo.education }}</td>
+            <td>{{ BaseInfo.property }}</td>
+            <td>{{ BaseInfo.property_location|default_if_none:"" }}</td>
+            <td>{{ BaseInfo.residential_address|default_if_none:"" }}</td>
+            <td>{{ BaseInfo.living_conditions|default_if_none:"" }}</td>
+            <td>{{ BaseInfo.company_name|default_if_none:"" }}</td>
+            <td>{{ BaseInfo.department|default_if_none:"" }}</td>
+            <td>{{ BaseInfo.recruit_time|default_if_none:"" }}</td>
+            <td>{{ BaseInfo.marriage }}</td>
+            <td>{{ BaseInfo.vehicle |default_if_none:""}}</td>
+            <td>{{ BaseInfo.residence_address|default_if_none:"" }}</td>
+            <td>{{ BaseInfo.residence_year|default_if_none:0 }}</td>
+            <td>{{ BaseInfo.company_address|default_if_none:"" }}</td>
+            <td>{{ BaseInfo.nature|default_if_none:"" }}</td>
+            <td>{{ BaseInfo.position }}</td>
+            <td><input type="button" value="导入征信信息" onclick="location.href='{% url 'importinfo:detail_base' BaseInfo.customer_id %}'"></td>
+            <td>{% if BaseInfo.scoring_status = 0 %}评分未完成{% else %} 评分完成 {% endif%}</td>
+        </tr>
+        {% endfor %}
+    </table >
+{% endblock %}
+</body>
+
+</html>
